@@ -1,3 +1,34 @@
+# 175. Combine Two Tables
+
+SELECT FirstName, Lastname, City, State FROM
+Person LEFT JOIN Address
+ON Person.PersonId = Address.PersonId
+
+
+
+
+# 176. Highest Salary
+
+SELECT Salary AS SecondHighestSalary FROM Employee GROUP BY Salary
+UNION ALL (SELECT NULL AS SecondHighestSalary)          # UNION操作符用于合并两个或多个 SELECT 语句的结果集, UNION ALL保留所有重复值
+ORDER BY SecondHighestSalary DESC LIMIT 1 OFFSET 1      # LIMIT 选取数量； OFFSET 偏移量
+
+
+# 182. Duplicate Emails
+
+SELECT DISTINCT (P.Email) 
+FROM Person P, Person P1
+WHERE (P.Id <> P1.Id and P.Email = P1.Email)
+
+or 
+
+SELECT DISTINCT (P.Email)
+FROM Person P
+GROUP BY p.Email
+HAVING COUNT(p.Email)>1
+
+
+
 # 197. Rising Temperature
 
 SELECT w1.id FROM Weather AS w1, Weather AS w2   # 表重命名
