@@ -6,12 +6,25 @@ ON Person.PersonId = Address.PersonId
 
 
 
-
 # 176. Highest Salary
 
 SELECT Salary AS SecondHighestSalary FROM Employee GROUP BY Salary
 UNION ALL (SELECT NULL AS SecondHighestSalary)          # UNION操作符用于合并两个或多个 SELECT 语句的结果集, UNION ALL保留所有重复值
 ORDER BY SecondHighestSalary DESC LIMIT 1 OFFSET 1      # LIMIT 选取数量； OFFSET 偏移量
+
+
+# 180. Consevutive Numbers
+
+select distinct l1.Num as ConsecutiveNums from Logs l1, Logs l2, Logs l3
+where l1.id = l2.id -1 and l2.id = l3.id -1
+and l1.Num = l2.Num and l2.Num = l3.Num
+
+
+# 181. Employees earning more than their managemers
+
+SELECT e1.Name as Employee 
+from Employee as e1 inner join Employee as e2 
+on e1.ManagerId = e2.Id and e1.Salary > e2.Salary
 
 
 # 182. Duplicate Emails
@@ -28,6 +41,19 @@ GROUP BY p.Email
 HAVING COUNT(p.Email)>1
 
 
+# 183. Customers who never order
+
+select Name as Customers from Customers as C
+Left join Orders as O on C.Id = O.CustomerId 
+where O.Id is null
+
+
+# 196. Delete Duplicated Emails
+
+Delete p1 from Person p1, Person p2 
+where p1.Email = p2.Email and p1.Id > p2.Id
+
+
 
 # 197. Rising Temperature
 
@@ -35,6 +61,11 @@ SELECT w1.id FROM Weather AS w1, Weather AS w2   # 表重命名
 WHERE w1.Temperature > w2.Temperature and DATEDIFF(w1.recordDate, w2.recordDate) = 1  # DATEDIFF函数返回两个日期之间的时间
 
 
+# 620. Not Boring Movies
+
+select * from cinema as c
+where c.id % 2 = 1 and c.description != 'boring'
+order by rating DESC
 
 
 # 1179. Reformat Department Table
