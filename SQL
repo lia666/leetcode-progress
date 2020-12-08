@@ -6,11 +6,36 @@ ON Person.PersonId = Address.PersonId
 
 
 
-# 176. Highest Salary
+# 176. Second Highest Salary
 
 SELECT Salary AS SecondHighestSalary FROM Employee GROUP BY Salary
 UNION ALL (SELECT NULL AS SecondHighestSalary)          # UNION操作符用于合并两个或多个 SELECT 语句的结果集, UNION ALL保留所有重复值
 ORDER BY SecondHighestSalary DESC LIMIT 1 OFFSET 1      # LIMIT 选取数量； OFFSET 偏移量
+
+
+
+# 177. Get the Nth Highest Salary
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  SET N = N -1;
+  RETURN (
+      select distinct Salary from Employee group by Salary 
+      order by Salary DESC limit 1 offset N
+      
+  );
+END
+
+# How to define a function in MySQL
+Create function 函数名（参数）
+Returns 返回值数据类型
+[with {Encryption | Schemabinding }]
+[as]
+begin
+SQL语句(必须有return 变量或值)
+End
+
+
 
 
 # 180. Consevutive Numbers
@@ -66,6 +91,11 @@ WHERE w1.Temperature > w2.Temperature and DATEDIFF(w1.recordDate, w2.recordDate)
 select * from cinema as c
 where c.id % 2 = 1 and c.description != 'boring'
 order by rating DESC
+
+
+# 626. Exchange Seats
+
+
 
 
 # 1179. Reformat Department Table
