@@ -207,6 +207,11 @@ from (film f inner join film_category fc on f.film_id = fc.film_id)
 where c.name = 'Action'
 
 # 子查询方式
+select f.title, f.description
+from film f
+where f.film_id in 
+      (select fc.film_id from film_category fc where fc.category_id 
+            in (select c.category_id from category c where c.name = 'Action'))
 
 
 
