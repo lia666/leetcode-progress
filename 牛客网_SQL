@@ -206,12 +206,20 @@ from (film f inner join film_category fc on f.film_id = fc.film_id)
     inner join category c on fc.category_id = c.category_id 
 where c.name = 'Action'
 
-# 子查询方式
+# 子查询方式1
 select f.title, f.description
 from film f
 where f.film_id in 
       (select fc.film_id from film_category fc where fc.category_id 
             in (select c.category_id from category c where c.name = 'Action'))
+      
+# 子查询方式2         
+select f.title, f.description
+from film f
+where exists (select * from film_category fc, category c
+             where f.film_id = fc.film_id 
+             and fc.category_id = c.category_id
+             and c.name = 'Action')
 
 
 
