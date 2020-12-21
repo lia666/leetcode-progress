@@ -220,6 +220,65 @@ where exists (select * from film_category fc, category c
              where f.film_id = fc.film_id 
              and fc.category_id = c.category_id
              and c.name = 'Action')
+             
+             
+ 32. 将employees表的所有员工的last_name和first_name拼接起来作为Name，中间以一个空格区分
+ 
+ select last_name ||" "||first_name as Name from employees
+ 
+ 
+ 
+ 33. 创建一个actor表，包含如下列信息
+ 
+ create table actor(
+    actor_id smallint(5) not null primary key,
+    first_name varchar(45) not null,
+    last_name varchar(45) not null,
+    last_update date not null)
+ 
+ 
+ 34. 批量插入数据
+ 
+insert into actor values
+    ('1','PENELOPE','GUINESS','2006-02-15 12:34:33'),
+    ('2','NICK','WAHLBERG','2006-02-15 12:34:33') 
+ 
+ 
+ 35. 批量插入数据，如果数据已经存在，请忽略，不使用replac操作
+ 
+create table actor_name(
+first_name varchar(45) not null,
+last_name varchar(45) not null)；
+insert into actor_name 
+select first_name, last_name from actor
+ 
+ 
+ 36. 创建一个actor_name表，将actor表中的所有first_name以及last_name导入该表
+ 
+create table actor_name
+select first_name,last_name from actor;
+ 
+ 
+ 37. 对first_name创建唯一索引uniq_idx_firstname，对last_name创建普通索引idx_lastname
+ 
+ 
+ 
+ 
+ 
+ 38. 针对actor表创建视图actor_name_view
+ 
+ 
+ 
+ 
+ 39. 针对上面的salaries表emp_no字段创建索引idx_emp_no，查询emp_no为10005
+ 
+ 
+ 
+ 
+ 
+ 40. 在last_update后面新增加一列名字为create_date
+ 
+ 
 
 
 
