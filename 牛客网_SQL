@@ -269,6 +269,9 @@ create index idx_lastname on actor(last_name);
  
  38. 针对actor表创建视图actor_name_view
  
+CREATE VIEW [actor_name_view] AS
+SELECT first_name as first_name_v, last_name as last_name_v
+FROM actor
  
  
  
@@ -278,7 +281,46 @@ create index idx_lastname on actor(last_name);
  
  
  
- 40. 在last_update后面新增加一列名字为create_date
+40. 在last_update后面新增加一列名字为create_date
+ 
+alter table actor 
+add column create_date datetime  not null DEFAULT '2020-10-01 00:00:00'; 
+
+
+
+42. 删除emp_no重复的记录，只保留最小的id对应的记录
+
+DELETE FROM titles_test WHERE id NOT IN
+(SELECT MIN(ID) FROM titles_test GROUP BY emp_no)
+
+
+43. 将所有to_date为9999-01-01的全部更新为NULL，且
+
+UPDATE titles_test
+SET to_date=null, from_date='2001-01-01'
+WHERE to_date='9999-01-01';
+
+
+44. 将id=5以及emp_no=10001的行数据替换成ID=5以及emp_no=10005，使用replace实现
+
+update titles_test
+set emp_no=replace(emp_no, 10001, 10005)
+where id=5
+
+
+45. 修改表格名称
+
+alter table titles_test rename to titles_2017
+
+
+48. 将所有获取奖金的员工当前的薪水增加10%
+
+update salaries
+set salary = salary * 1.1
+where emp_no in (select emp_no from emp_bonus)
+and to_date = '9999-01-01'
+
+
  
  
 
